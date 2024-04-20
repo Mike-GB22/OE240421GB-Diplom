@@ -3,6 +3,7 @@ package DAO;
 
 import java.util.Date;
 import java.util.Random;
+import com.google.gson.Gson;
 
 public class Message {
     private static long count = 0;
@@ -86,5 +87,19 @@ public class Message {
 
     public String getMessage() {
         return message;
+    }
+    @Override
+    public String toString(){
+        String result = String.format("MSG id: %s from: %d %s%n",message_id, user_id, date);
+        result += String.format("Edit: %b from: %d%n", editFlag, edit);
+        result += String.format("Private: %b to: %d%n", privateFlag, for_user_id);
+        result += String.format("Topic: %s%n", topic);
+        result += String.format("%s%n", message);
+        return result;
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }

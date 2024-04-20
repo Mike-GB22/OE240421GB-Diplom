@@ -2,6 +2,7 @@ package DAO;
 
 import java.util.Date;
 import java.util.Random;
+import com.google.gson.Gson;
 
 public class UserSession {
     private static long count = 0;
@@ -58,5 +59,18 @@ public class UserSession {
         if(count >= Long.MAX_VALUE){
             count = 0;
         };
+    }
+    @Override
+    public String toString(){
+        String result = String.format("SESSION id: %s",session_id);
+        result += String.format("User: %s, pass: HASH %s, IP address: %s%n", user_id, passHash, ip);
+        result += String.format("Made: %s%n", begone);
+        result += String.format("Update: %s%n", updated);
+        return result;
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }
