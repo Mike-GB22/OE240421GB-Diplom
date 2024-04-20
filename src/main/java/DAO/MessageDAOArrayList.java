@@ -27,6 +27,20 @@ public class MessageDAOArrayList implements MessageDAO{
         }
         return null;
     }
+    @Override
+    public List<Message> getMessages(String[] messages_id){
+        List<Message> msgs = new ArrayList<>();
+        for(Message msg : list){
+            String message_id = msg.getMessage_id();
+            for(String weAreLookingForMessage_id : messages_id){
+                if (message_id.equals(weAreLookingForMessage_id)){
+                    msgs.add(msg);
+                    break;
+                }
+            }
+        }
+        return msgs;
+    }
 
     @Override
     public List<Message> getAllMessages() {
@@ -46,26 +60,44 @@ public class MessageDAOArrayList implements MessageDAO{
 
     @Override
     public Message deleteMessage(String message_id) {
+        Message msg = getMessage(message_id);
+        if(msg != null) {
+            list.remove(msg);
+            return msg;
+        }
         return null;
     }
 
     @Override
     public List<Message> deleteMessages(String[] messages_id) {
-        return null;
+        List<Message> msgs = getMessages(messages_id);
+        for(Message msg : msgs){
+            list.remove(msg);
+        }
+        return msgs;
     }
 
     @Override
     public List<Message> deleteAllMessages() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
     public List<Message> deleteAllMessagesFromUser(int user_id) {
-        return null;
+        List<Message> msgs = getAllMessagesFromUser(user_id);
+        for(Message msg : msgs){
+            list.remove(msg);
+        }
+        return msgs;
     }
 
     @Override
     public Message editMessage(String message_id, String newMessage) {
+        Message msg = getMessage(message_id);
+        if(msg != null) {
+            msg.editMessage(newMessage);
+            return msg;
+        }
         return null;
     }
 }

@@ -2,7 +2,7 @@ package DAO;
 
 import java.util.List;
 
-public interface MessageDAO {
+public interface MessageRepository {
     Message newMessage(int user_id, String topic, String message);
     Message newPrivateMessage(int user_id, String topic, String message, int for_user_id);
     Message getMessage(String message_id);
