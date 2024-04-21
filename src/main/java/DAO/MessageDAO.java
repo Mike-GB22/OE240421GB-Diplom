@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface MessageDAO {
     Message newMessage(int user_id, String topic, String message);
+    void addMessage(Message message);
     Message newPrivateMessage(int user_id, String topic, String message, int for_user_id);
     Message getMessage(String message_id);
     List<Message> getMessages(String[] messages_id);
@@ -14,4 +15,5 @@ public interface MessageDAO {
     List<Message> deleteAllMessages();
     List<Message> deleteAllMessagesFromUser(int user_id);
     Message editMessage(String message_id, String newMessage);
+    int size();
 }

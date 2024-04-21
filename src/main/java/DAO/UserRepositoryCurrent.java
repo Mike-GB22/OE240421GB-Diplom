@@ -19,6 +19,11 @@ public class UserRepositoryCurrent implements UserRepository{
     }
 
     @Override
+    public void addUser(User user) {
+        dao.addUser(user);
+    }
+
+    @Override
     public User getUser(int user_id) {
         return dao.getUser(user_id);
     }
@@ -56,5 +61,10 @@ public class UserRepositoryCurrent implements UserRepository{
     @Override
     public User renameUser(int user_id, String newName) {
         return dao.renameUser(user_id, newName);
+    }
+
+    @Override
+    public int size() {
+        return dao.size();
     }
 }

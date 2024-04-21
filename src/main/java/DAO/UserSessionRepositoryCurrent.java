@@ -18,6 +18,10 @@ public class UserSessionRepositoryCurrent implements UserSessionRepository{
         return dao.newSession(user_id, passHash, ip);
     }
 
+    public void addSession(UserSession userSession){
+        dao.addSession(userSession);
+    }
+
     @Override
     public UserSession getSession(String session_id) {
         return dao.getSession(session_id);

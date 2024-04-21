@@ -7,8 +7,8 @@ public class User {
     private static int max_user_id = 0;
     private int user_id;
     private String name;
-    @Expose(serialize = false)
-    private String pass;
+    //@Expose(serialize = false)
+    private transient String pass;
     private boolean admin_flag;
 
     public User(String name, String pass){
@@ -44,6 +44,10 @@ public class User {
         return pass;
     }
 
+    public boolean checkPass(String passToCheck) {
+        if (pass.equals(passToCheck)) return true;
+        return false;
+    }
     public boolean isAdmin_flag() {
         return admin_flag;
     }

@@ -1,7 +1,23 @@
 package DAO;
 
+import services.DataServices;
+
 public class testDAO implements Runnable {
+    //Для доступа к сервисам работы с данными
+    private DataServices dataServices;
+
+    public testDAO(){}
+    public testDAO(DataServices dataServices){
+        this.dataServices = dataServices;
+    }
+
     public static void main(String[] args) {
+        Thread testDAOthread = new Thread(new testDAO());
+        testDAOthread.start();
+    }
+
+    @Override
+    public void run() {
         System.out.println("----------------------------");
         System.out.println("MESSAGES:");
         System.out.println("----------------------------");
@@ -35,10 +51,22 @@ public class testDAO implements Runnable {
         System.out.println(ss1.toJson());
         System.out.println(ss2.toJson());
 
-    }
+        System.out.println("---------------------------------");
+        if(dataServices != null){
+            System.out.println("Заносим все созданные объекты в репозитории: ");
+            dataServices.userSessionService.getRepository().addSession(ss1);
+            dataServices.userSessionService.getRepository().addSession(ss2);
 
-    @Override
-    public void run() {
+            dataServices.userService.getRepository().addUser(user1);
+            dataServices.userService.getRepository().addUser(user2);
 
+            dataServices.messageService.getRepository().addMessage(msg);
+            dataServices.messageService.getRepository().addMessage(msg2);
+
+            dataServices.printSize();
+        } else {
+            System.out.println("СОЗДАННЫЕ ЭЛЕМЕНТЫ НЕ ЗАНЕСЕННЫ В РЕПОЗИТОРИЙ!!!");
+        }
+        System.out.println("---------------------------------");
     }
 }

@@ -12,6 +12,11 @@ public class MessageDAOArrayList implements MessageDAO{
     }
 
     @Override
+    public void addMessage(Message message) {
+        list.add(message);
+    }
+
+    @Override
     public Message newPrivateMessage(int user_id, String topic, String message, int for_user_id) {
         Message msg = new Message(user_id, topic, message, for_user_id);
         return msg;
@@ -99,5 +104,10 @@ public class MessageDAOArrayList implements MessageDAO{
             return msg;
         }
         return null;
+    }
+
+    @Override
+    public int size() {
+        return list.size();
     }
 }

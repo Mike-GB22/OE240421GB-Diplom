@@ -19,6 +19,11 @@ public class MessageRepositoryCurrent implements MessageRepository{
     }
 
     @Override
+    public void addMessage(Message message) {
+        dao.addMessage(message);
+    }
+
+    @Override
     public Message newPrivateMessage(int user_id, String topic, String message, int for_user_id) {
         return dao.newPrivateMessage(user_id, topic, message, for_user_id);
     }
@@ -66,5 +71,10 @@ public class MessageRepositoryCurrent implements MessageRepository{
     @Override
     public Message editMessage(String message_id, String newMessage) {
         return dao.editMessage(message_id, newMessage);
+    }
+
+    @Override
+    public int size() {
+        return dao.size();
     }
 }

@@ -14,6 +14,11 @@ public class UserDAOArrayList implements UserDAO{
     }
 
     @Override
+    public void addUser(User user) {
+        list.add(user);
+    }
+
+    @Override
     public User getUser(int user_id) {
         for(User user : list){
             if(user.getUser_id() == user_id){
@@ -84,4 +89,10 @@ public class UserDAOArrayList implements UserDAO{
             user.setName(newName);
             return user;}
         return null;
-    }}
+    }
+
+    @Override
+    public int size() {
+        return list.size();
+    }
+}

@@ -14,6 +14,11 @@ public class UserSessionDAOArrayList implements UserSessionDAO {
         return session;
     }
 
+    @Override
+    public void addSession(UserSession userSession) {
+        list.add(userSession);
+    }
+
 
     @Override
     public boolean isSession(String session_id) {
