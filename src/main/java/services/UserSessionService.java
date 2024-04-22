@@ -64,4 +64,9 @@ public class UserSessionService {
     private void deleteTimeOutSession(){
         repository.deleteTimeOut(TIME_OUT_FOR_SESSION_SECONDS);
     }
+
+    @Override
+    public String toString(){
+        return repository.toString();
+    }
 }

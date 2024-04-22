@@ -1,5 +1,7 @@
 package services;
 
+import DAO.testDAO;
+
 //Класс для единообразного доступа ко всем сервисам работы с данными
 public class DataServices {
     private static DataServices instance;
@@ -11,7 +13,9 @@ public class DataServices {
         userService = UserService.getInstance();
         userSessionService = UserSessionService.getInstance();
         messageService = MessageService.getInstance();
-    }
+
+        fillTestingDataInDAO();
+   }
 
     public static DataServices getInstance(){
         if(instance == null){
@@ -38,4 +42,8 @@ public class DataServices {
         System.out.println(size());
     }
 
+    public void fillTestingDataInDAO(){
+        Thread testDAOthread = new Thread(new testDAO(instance));
+        testDAOthread.start();
+    }
 }
