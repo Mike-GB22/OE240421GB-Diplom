@@ -2,7 +2,6 @@
 import services.DataServices;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,18 +10,21 @@ public class ClientManager implements Runnable{
     private final static List<ClientManager> clients = new ArrayList<>();
     private final static List<ClientManager> streamClients = new ArrayList<>();
     private final Socket socket;
+    public final String clientIPAddress;
     private static final DataServices dataServices = Server.getDataServices();
     private BusinessLogicHandler businessLogicHandler;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
-    private String name;
+    private String nameOrSID;
     private int clientID;
     private static int count_ClientID = 0;
 
 
     public ClientManager(Socket socket) {
         this.socket = socket;
+        clientIPAddress = socket.getInetAddress().getHostAddress();
         setClientID();
+
         businessLogicHandler = new BusinessLogicHandler(dataServices, this);
     }
 
@@ -33,25 +35,28 @@ public class ClientManager implements Runnable{
         }
     }
 
+    public void setSID(String SID){
+        this.nameOrSID = SID;
+    }
+
     @Override
     public void run() {
         try{
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             clients.add(this);
-            String clientAddress = socket.getInetAddress().getHostAddress();
-            name = bufferedReader.readLine();
+            nameOrSID = bufferedReader.readLine();
             //Обрезаем анонимное имя до 100 символов
-            if(name.length() > 100){
-                name = name.substring(0, 100);
+            if(nameOrSID.length() > 100){
+                nameOrSID = nameOrSID.substring(0, 100);
             }
             StringBuilder nameBuilder = new StringBuilder("ClientID: " + clientID);
-            nameBuilder.append(", name: " + name);
-            nameBuilder.append(" - ip: " + clientAddress);
+            nameBuilder.append(", name: " + nameOrSID);
+            nameBuilder.append(" - ip: " + clientIPAddress);
 
-            name = nameBuilder.toString();
+            nameOrSID = nameBuilder.toString();
 
-            printServerLog("User: " + name + " is connected.");
+            printServerLog("User: " + nameOrSID + " is connected.");
 
             //Начинаем слушать все запросы клиента
             listenMessagesFromClient();
@@ -66,18 +71,18 @@ public class ClientManager implements Runnable{
         String messagesFromClient;
         while (socket.isConnected()){
             messagesFromClient = bufferedReader.readLine();
-            printServerLog(String.format("[%s] -> Server: %s", this.name, messagesFromClient));
+            printServerLog(String.format("[%s] -> Server: %s", this.nameOrSID, messagesFromClient));
             businessLogicHandler.messagesFromClientHandler(messagesFromClient);
         }
     }
 
     void broadcastMessageToAll(String message) throws IOException{
-        printServerLog(String.format("Server -> All Client [from %s]: %s", this.name, message));
+        printServerLog(String.format("Server -> All Client [from %s]: %s", this.nameOrSID, message));
         broadcastMessage(clients, message);
     }
 
     void broadcastMessageToStream(String message) throws IOException{
-        printServerLog(String.format("Server -> Stream Client [from %s]: %s", this.name, message));
+        printServerLog(String.format("Server -> Stream Client [from %s]: %s", this.nameOrSID, message));
         broadcastMessage(streamClients, message);
     }
     void broadcastMessage(List<ClientManager> clientsList, String message) throws IOException{
@@ -89,7 +94,7 @@ public class ClientManager implements Runnable{
     }
 
     void messageToClient(String message) throws IOException{
-        printServerLog(String.format("Server -> Client [%s]: %s", this.name, message));
+        printServerLog(String.format("Server -> Client [%s]: %s", this.nameOrSID, message));
         this.bufferedWriter.write(message);
         this.bufferedWriter.newLine();
         this.bufferedWriter.flush();
@@ -97,7 +102,7 @@ public class ClientManager implements Runnable{
 
     private void exit() throws IOException {
         clients.remove(this);
-        String prompt = "User: " + name + " is disconnected.";
+        String prompt = "User: " + nameOrSID + " is disconnected.";
         printServerLog(prompt);
         broadcastMessageToStream(prompt);
     }

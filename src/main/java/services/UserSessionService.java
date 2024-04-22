@@ -1,5 +1,6 @@
 package services;
 
+import DAO.User;
 import DAO.UserSession;
 import DAO.UserSessionRepository;
 import DAO.UserSessionRepositoryCurrent;
@@ -57,6 +58,19 @@ public class UserSessionService {
         UserSession userSession = repository.newSession(user_id, passHash, ip);
         return userSession.getSession_id();
     }
+
+    /**
+     * Проверяем есть ли запрашиваяемая сессия в списке
+     * @param askedSID
+     * @return
+     */
+    public String checkSID(String askedSID){
+        if(repository.isSession(askedSID)){
+            return askedSID;
+        } else { return null; }
+    }
+
+
 
     /**
      * Удаление сессий, время которых больше чем установленно в КОНСТАНТЕ
