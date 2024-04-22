@@ -24,8 +24,9 @@ public class Message {
         this.date = new Date();
         this.editFlag = false;
 
-        message_id = "MESSAGE_" + date.getTime() + "-" + (new Random().nextDouble()*1_000_000);
-        messagesCountIncrement();
+        message_id = "MESSAGE_"
+                + String.format("%020d", getMessagesCount())
+                + "_" + date.getTime();
     }
 
     //Конструктор приватного сообщения
@@ -42,11 +43,12 @@ public class Message {
         return this;
     }
 
-    private void messagesCountIncrement(){
+    private long getMessagesCount(){
         count++;
         if(count >= Long.MAX_VALUE){
             count = 0;
         };
+        return count;
     }
 
     public static long getCount() {

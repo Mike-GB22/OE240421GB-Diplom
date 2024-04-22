@@ -56,4 +56,9 @@ public class UserSessionRepositoryCurrent implements UserSessionRepository{
     public int size() {
         return dao.size();
     }
+
+    @Override
+    public String toString(){
+        return dao.toString();
+    }
 }

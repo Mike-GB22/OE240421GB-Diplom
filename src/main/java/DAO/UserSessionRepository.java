@@ -12,4 +12,5 @@ public interface UserSessionRepository {
     List<UserSession> deleteAll();
     List<UserSession> deleteTimeOut(int timeOutSecundes);
     int size();
+    String toString();
 }

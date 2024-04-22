@@ -89,4 +89,14 @@ public class UserSessionDAOArrayList implements UserSessionDAO {
         }
         return null;
     }
+
+    @Override
+    public String toString(){
+        StringBuilder result = new StringBuilder("UserSessionDAOArrayList: \n");
+        for(UserSession userSession : list){
+            result.append("\n");
+            result.append(userSession);
+        }
+        return result.toString();
+    }
 }

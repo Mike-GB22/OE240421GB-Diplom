@@ -11,6 +11,7 @@ public class testDAO implements Runnable {
         this.dataServices = dataServices;
     }
 
+    //Для ручного выполнения заполнения.
     public static void main(String[] args) {
         Thread testDAOthread = new Thread(new testDAO());
         testDAOthread.start();

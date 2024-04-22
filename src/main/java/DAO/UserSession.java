@@ -62,10 +62,11 @@ public class UserSession {
     }
     @Override
     public String toString(){
-        String result = String.format("SESSION id: %s",session_id);
-        result += String.format("User: %s, pass: HASH %s, IP address: %s%n", user_id, passHash, ip);
-        result += String.format("Made: %s%n", begone);
-        result += String.format("Update: %s%n", updated);
+        String result = String.format("[SESSION id: %s ", session_id);
+        result += String.format("User: %s, pass (HASH): %s, IP address: %s%n", user_id, passHash, ip);
+        result += String.format("Made: %s, ", begone);
+        result += String.format("Update: %s", updated);
+        result += String.format("]");
         return result;
     }
 
