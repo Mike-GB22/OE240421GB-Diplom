@@ -119,4 +119,19 @@ public class MessageDAOArrayList implements MessageDAO{
             System.out.println(msg);
         }
     }
+
+    @Override
+    public List<Message> getLast100Messages() {
+        List<Message> result = new ArrayList<>();
+        List<Message> tempResult = new ArrayList<>();
+        for(int i = list.size() - 1, j = 0; i >= 0 && j < 100; i--, j++){
+            tempResult.add(list.get(i));
+        }
+        int size = tempResult.size();
+        for(int i = 1; i <= size; i++){
+            result.add(tempResult.get(size - i));
+        }
+
+        return result;
+    }
 }

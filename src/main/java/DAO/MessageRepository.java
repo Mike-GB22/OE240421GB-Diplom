@@ -17,4 +17,6 @@ public interface MessageRepository {
     Message editMessage(String message_id, String newTopic, String newMessage);
     int size();
     void print();
+
+    List<Message> getLast100Messages();
 }

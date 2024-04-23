@@ -3,7 +3,6 @@ package services;
 import DAO.Message;
 import DAO.MessageRepository;
 import DAO.MessageRepositoryCurrent;
-import DAO.UserSessionRepository;
 
 import java.util.List;
 
@@ -42,23 +41,20 @@ public class MessageService {
         return repository.newPrivateMessage(user_id, topic, message, for_user_id);
     }
 
-    public Message getMessage(String message_id) {
+    public Message getMessages(String message_id) {
         return repository.getMessage(message_id);
     }
 
-    public List<Message> getMessage(String[] message_ids) {
+    public List<Message> getMessages(String[] message_ids) {
         return repository.getMessages(message_ids);
-    }
-
-
-    public List<Message> getMessages(String[] messages_id) {
-        return repository.getMessages(messages_id);
     }
 
     public List<Message> getAllMessages() {
         return repository.getAllMessages();
     }
-
+    public List<Message> getLast100Messages(){
+        return repository.getLast100Messages();
+    }
     public Message deleteMessage(String message_id) {
         return repository.deleteMessage(message_id);
     }

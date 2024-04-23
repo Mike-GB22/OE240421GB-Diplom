@@ -75,14 +75,13 @@ public class BusinessLogicHandler {
             case "@getarray":
                 handlerGetManyMsgs(arguments);
                 break;
-
+            case "@getlast100":
+                handlerGetLast100Msgs();
+                break;
             case "@getlast":
                 break;
             case "@getbetween":
                 break;
-            case "@get100":
-                break;
-
 
             case "@printusers":
                 dataServices.userService.print();
@@ -105,6 +104,7 @@ public class BusinessLogicHandler {
         }
         //clientManager.broadcastMessageToAll("return : " + messagesFromClient);
     }
+
 
     //Редактирование сообщения
     private void handlerMsgEdit(String argumentsString) throws IOException{
@@ -146,7 +146,7 @@ public class BusinessLogicHandler {
 
     //Получение одного сообщения по его Идетификатору
     private void handlerGetMsg(String messageID) throws IOException{
-        Message msg = dataServices.messageService.getMessage(messageID);
+        Message msg = dataServices.messageService.getMessages(messageID);
         try {
             clientManager.messageToClient(msg.toJson());
         } catch (Exception e){
@@ -157,7 +157,7 @@ public class BusinessLogicHandler {
     //Получение многих сообщений по списку идентиикаторов
     private void handlerGetManyMsgs(String argumentsString) throws IOException{
         String[] messageIDs = splitArguments(argumentsString,1001);
-        List<Message> msgs = dataServices.messageService.getMessage(messageIDs);
+        List<Message> msgs = dataServices.messageService.getMessages(messageIDs);
         for (Message msg : msgs) {
             try {
                 clientManager.messageToClient(msg.toJson());
@@ -166,6 +166,19 @@ public class BusinessLogicHandler {
             }
         }
     }
+
+    //Получение 100 последних сообщений
+    private void handlerGetLast100Msgs() throws IOException {
+        List<Message> msgs = dataServices.messageService.getLast100Messages();
+        for (Message msg : msgs) {
+            try {
+                clientManager.messageToClient(msg.toJson());
+            } catch (Exception e) {
+                clientManager.messageToClient(BusinessLogicAnswers.badMessageID());
+            }
+        }
+    }
+
 
     ///Добавление ПРИВАТНОГО сообщения
     private void handlerMsgPrivate(String argumentsString) throws IOException{

@@ -82,4 +82,9 @@ public class MessageRepositoryCurrent implements MessageRepository{
     public void print() {
         dao.print();
     }
+
+    @Override
+    public List<Message> getLast100Messages() {
+        return dao.getLast100Messages();
+    }
 }
