@@ -19,4 +19,5 @@ public interface MessageRepository {
     void print();
 
     List<Message> getLast100Messages();
+    List<Message> getLastMessagesForm(String messageID);
 }

@@ -78,7 +78,8 @@ public class BusinessLogicHandler {
             case "@getlast100":
                 handlerGetLast100Msgs();
                 break;
-            case "@getlast":
+            case "@getlastform":
+                handlerGetLastMsgsFrom(arguments);
                 break;
             case "@getbetween":
                 break;
@@ -179,6 +180,17 @@ public class BusinessLogicHandler {
         }
     }
 
+    //Получение всех последних сообщений с указанного индекса
+    private void handlerGetLastMsgsFrom(String messageID) throws IOException{
+        List<Message> msgs = dataServices.messageService.getLastMessagesForm(messageID);
+        for (Message msg : msgs) {
+            try {
+                clientManager.messageToClient(msg.toJson());
+            } catch (Exception e) {
+                clientManager.messageToClient(BusinessLogicAnswers.badMessageID());
+            }
+        }
+    }
 
     ///Добавление ПРИВАТНОГО сообщения
     private void handlerMsgPrivate(String argumentsString) throws IOException{

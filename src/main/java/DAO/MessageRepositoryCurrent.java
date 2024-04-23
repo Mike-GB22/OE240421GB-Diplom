@@ -87,4 +87,9 @@ public class MessageRepositoryCurrent implements MessageRepository{
     public List<Message> getLast100Messages() {
         return dao.getLast100Messages();
     }
+
+    @Override
+    public List<Message> getLastMessagesForm(String messageID) {
+        return dao.getLastMessagesForm(messageID);
+    }
 }

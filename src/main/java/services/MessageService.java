@@ -55,6 +55,11 @@ public class MessageService {
     public List<Message> getLast100Messages(){
         return repository.getLast100Messages();
     }
+    public List<Message> getLastMessagesForm(String messageID) {
+        return repository.getLastMessagesForm(messageID);
+    }
+
+
     public Message deleteMessage(String message_id) {
         return repository.deleteMessage(message_id);
     }
@@ -66,4 +71,5 @@ public class MessageService {
     public void print(){
         repository.print();
     }
+
 }

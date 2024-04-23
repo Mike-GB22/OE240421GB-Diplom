@@ -134,4 +134,25 @@ public class MessageDAOArrayList implements MessageDAO{
 
         return result;
     }
+
+    @Override
+    public List<Message> getLastMessagesForm(String messageID) {
+        List<Message> result = new ArrayList<>();
+        boolean flagIsMessageIDwasGefunden = false;
+        for(int i = 0; i < list.size(); i++){
+            if(!flagIsMessageIDwasGefunden) {
+                if (list.get(i).getMessage_id().equals(messageID)) {
+                    flagIsMessageIDwasGefunden = true;
+                } else {
+                    continue;
+                }
+            } else {
+                result.add(list.get(i));
+            }
+
+        }
+        return result;
+    }
+
 }
+
