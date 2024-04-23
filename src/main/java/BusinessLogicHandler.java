@@ -1,8 +1,7 @@
+import DAO.UserSession;
 import services.DataServices;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Locale;
 
 public class BusinessLogicHandler {
     private final ClientManager clientManager;
@@ -34,12 +33,25 @@ public class BusinessLogicHandler {
                 handlerLoginBySession(arguments);
                 break;
 
+
+            case "@endsession":
+                handlerEndSession();
+                break;
+
+            case "@onlyexit":
+                handlerEndSession();
+                handlerExit();
+                break;
+
             case "@exit":
+                handlerExit();
                 break;
 
             case "@streamon":
+                handlerStreamOn();
                 break;
             case "@streamoff":
+                handlerStreamOff();
                 break;
 
             case "@msg":
@@ -66,6 +78,53 @@ public class BusinessLogicHandler {
         clientManager.broadcastMessageToAll("return : " + messagesFromClient);
     }
 
+    //Список клиентов в стирме. Добавление текущего клиента в список
+    private void handlerStreamOn() throws IOException{
+        if(clientManager.getStreamClients().add(clientManager)){
+            clientManager.messageToClient(
+                    BusinessLogicAnswers.ok());
+        } else {
+            clientManager.messageToClient(
+                    BusinessLogicAnswers.bad());
+        }
+        return;
+    }
+
+    //Список клиентов в стирме. Удаление текущего клиента из списока
+    private void handlerStreamOff() throws IOException {
+        if(clientManager.getStreamClients().remove(clientManager)){
+            clientManager.messageToClient(
+                BusinessLogicAnswers.ok());
+        } else {
+            clientManager.messageToClient(
+            BusinessLogicAnswers.bad());
+        }
+        return;
+    }
+
+    //Удаленние текущей сессии из списка
+    private void handlerEndSession() throws IOException {
+        UserSession userSession = dataServices.userSessionService.endSession(clientManager.getSID());
+        if(userSession != null) {
+            clientManager.messageToClient(
+                    BusinessLogicAnswers.okSessionEndet());
+        } else {
+            clientManager.messageToClient(BusinessLogicAnswers.badSession());
+        }
+    }
+
+    //Закрытие сокета сервером.
+    private void handlerExit() {
+        try {
+            clientManager.getSocket().close();
+            clientManager.broadcastMessageToStream(BusinessLogicAnswers.warnUserExited(
+                    clientManager.getSID()
+                    , clientManager.getUserName()));
+        } catch (IOException e) {
+
+        }
+    }
+
     //Обработчик. Вход по логину и паролю
     private void handlerLogin(String argumentsString) throws IOException{
         String[] arguments = splitArguments(argumentsString,2);
@@ -80,6 +139,9 @@ public class BusinessLogicHandler {
         if(SID != null){
             clientManager.setSID(SID);
             clientManager.messageToClient(SID);
+            clientManager.broadcastMessageToStream(BusinessLogicAnswers.warnUserEntered(
+                    clientManager.getSID()
+                    , clientManager.getUserName()));
         } else {
             clientManager.messageToClient(BusinessLogicAnswers.badLogin());
         }
@@ -91,6 +153,10 @@ public class BusinessLogicHandler {
         if(SID != null){
             clientManager.setSID(SID);
             clientManager.messageToClient(SID);
+            clientManager.broadcastMessageToStream(BusinessLogicAnswers.warnUserEntered(
+                    clientManager.getSID()
+                    , clientManager.getUserName()));
+
         } else {
             clientManager.messageToClient(BusinessLogicAnswers.badSession());
         }

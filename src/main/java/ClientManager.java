@@ -1,4 +1,6 @@
 //2024.03.29 mip24
+import DAO.User;
+import DAO.UserSession;
 import services.DataServices;
 
 import java.io.*;
@@ -16,6 +18,7 @@ public class ClientManager implements Runnable{
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String nameOrSID;
+    private UserSession userSession;
     private int clientID;
     private static int count_ClientID = 0;
 
@@ -37,6 +40,20 @@ public class ClientManager implements Runnable{
 
     public void setSID(String SID){
         this.nameOrSID = SID;
+        this.userSession = dataServices.userSessionService.getRepository().getSession(SID);
+    }
+
+    public UserSession getUserSession() {
+        return userSession;
+    }
+
+    public String getUserName() {
+        try {
+            User user = dataServices.userService.getRepository().getUser(userSession.getUser_id());
+            return user.getName();
+        } catch (Exception e) {
+            return "Õ≈ ¿”“≈Õ“»÷»‘»–Œ¬¿Õ";
+        }
     }
 
     @Override
@@ -120,5 +137,17 @@ public class ClientManager implements Runnable{
 
     public void printServerLog(String logMessage){
         System.out.println(logMessage);
+    }
+
+    public String getSID(){
+        return nameOrSID;
+    }
+
+    public Socket getSocket(){
+        return socket;
+    }
+
+    public static List<ClientManager> getStreamClients(){
+        return streamClients;
     }
 }

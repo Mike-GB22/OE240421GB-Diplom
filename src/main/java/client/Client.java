@@ -43,12 +43,15 @@ public class Client {
             public void run() {
                 String messageFromServer;
                 System.out.println("Staring listener messages from Server...");
-                while(socket.isConnected() && isClientRun){
+                while(isClientRun && socket.isConnected()){
                     try {
                         messageFromServer = bufferedReader.readLine();
                         System.out.println(messageFromServer);
                     } catch (IOException e) {
                         closeEverything("messageFromServer");
+
+                    } catch (Exception e) {
+                        closeEverything("общая ошибка");
                     }
                 }
             }
@@ -71,13 +74,14 @@ public class Client {
     }
 
     public void closeEverything(String text){
+        isClientRun = false;
         System.out.print(text + " - ");
         closeEverything();
     }
 
     public void closeEverything(){
-        System.out.println("Close everything...");
         isClientRun = false;
+        System.out.println("Close everything...");
         try {
             if (bufferedReader != null) bufferedReader.close();
             if (bufferedWriter != null) bufferedWriter.close();

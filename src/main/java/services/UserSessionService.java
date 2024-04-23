@@ -83,4 +83,11 @@ public class UserSessionService {
     public String toString(){
         return repository.toString();
     }
+
+    /**
+     * Удаление текущией сессии
+     */
+    public UserSession endSession(String SID) {
+        return repository.deleteSession(SID);
+    }
 }
