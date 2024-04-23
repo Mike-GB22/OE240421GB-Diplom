@@ -47,6 +47,14 @@ public class ClientManager implements Runnable{
         return userSession;
     }
 
+    public int getUserID() {
+        try {
+            return userSession.getUser_id();
+        } finally {
+            return 0;
+        }
+    }
+
     public String getUserName() {
         try {
             User user = dataServices.userService.getRepository().getUser(userSession.getUser_id());
@@ -102,11 +110,26 @@ public class ClientManager implements Runnable{
         printServerLog(String.format("Server -> Stream Client [from %s]: %s", this.nameOrSID, message));
         broadcastMessage(streamClients, message);
     }
+
+    void privateMessageToStream(int userID, String message) throws IOException{
+        printServerLog(String.format("Server -> Private from Stream Client [from %s]: %s", this.nameOrSID, message));
+        privateMessage(getClientManagerByUserID(userID), streamClients, message);
+    }
     void broadcastMessage(List<ClientManager> clientsList, String message) throws IOException{
         for(ClientManager client : clientsList){
             client.bufferedWriter.write(message);
             client.bufferedWriter.newLine();
             client.bufferedWriter.flush();
+        }
+    }
+
+    void privateMessage(ClientManager toClientManager, List<ClientManager> clientsList, String message) throws IOException{
+        for(ClientManager client : clientsList){
+            if(client.equals(toClientManager)) {
+                client.bufferedWriter.write(message);
+                client.bufferedWriter.newLine();
+                client.bufferedWriter.flush();
+            }
         }
     }
 
@@ -122,6 +145,20 @@ public class ClientManager implements Runnable{
         String prompt = "User: " + nameOrSID + " is disconnected.";
         printServerLog(prompt);
         broadcastMessageToStream(prompt);
+        deleteAllCloseClientManagers();
+    }
+
+    //Удаление всех закрытых соединений, если мы не заметили когда они отвалились
+    private void deleteAllCloseClientManagers() throws IOException{
+        List<ClientManager> listToDelete = new ArrayList<>();
+        for(ClientManager client: clients){
+            if(!client.socket.isConnected()){
+                listToDelete.add(client);
+            }
+        }
+        for(ClientManager client: listToDelete){
+            clients.remove(client);
+        }
     }
 
     private void closeEverything(){
@@ -141,6 +178,15 @@ public class ClientManager implements Runnable{
 
     public String getSID(){
         return nameOrSID;
+    }
+
+    public static ClientManager getClientManagerByUserID(int userID){
+        for(ClientManager client: clients){
+            if(client.getUserID() == userID){
+                return client;
+            }
+        }
+        return null;
     }
 
     public Socket getSocket(){
