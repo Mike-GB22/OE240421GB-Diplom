@@ -13,4 +13,5 @@ public interface UserSessionDAO {
     List<UserSession> deleteTimeOut(int timeOutSecundes);
     int size();
     String toString();
+    void print();
 }

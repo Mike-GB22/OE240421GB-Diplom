@@ -61,4 +61,9 @@ public class UserSessionRepositoryCurrent implements UserSessionRepository{
     public String toString(){
         return dao.toString();
     }
+
+    @Override
+    public void print() {
+        dao.print();
+    }
 }

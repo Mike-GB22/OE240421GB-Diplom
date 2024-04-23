@@ -90,4 +90,8 @@ public class UserSessionService {
     public UserSession endSession(String SID) {
         return repository.deleteSession(SID);
     }
+
+    public void print(){
+        repository.print();
+    }
 }

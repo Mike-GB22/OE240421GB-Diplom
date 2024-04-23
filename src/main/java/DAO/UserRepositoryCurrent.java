@@ -67,4 +67,9 @@ public class UserRepositoryCurrent implements UserRepository{
     public int size() {
         return dao.size();
     }
+
+    @Override
+    public void print() {
+        dao.print();
+    }
 }

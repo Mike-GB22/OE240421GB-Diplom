@@ -44,4 +44,8 @@ public class UserService {
         }
         return false;
     }
+
+    public void print(){
+        repository.print();
+    }
 }

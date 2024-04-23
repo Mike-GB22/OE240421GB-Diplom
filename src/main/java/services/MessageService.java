@@ -46,6 +46,11 @@ public class MessageService {
         return repository.getMessage(message_id);
     }
 
+    public List<Message> getMessage(String[] message_ids) {
+        return repository.getMessages(message_ids);
+    }
+
+
     public List<Message> getMessages(String[] messages_id) {
         return repository.getMessages(messages_id);
     }
@@ -58,7 +63,11 @@ public class MessageService {
         return repository.deleteMessage(message_id);
     }
 
-    public Message editMessage(String message_id, String newMessage) {
-        return repository.editMessage(message_id, newMessage);
+    public Message editMessage(String message_id, String newTopic, String newMessage) {
+        return repository.editMessage(message_id, newTopic, newMessage);
+    }
+
+    public void print(){
+        repository.print();
     }
 }

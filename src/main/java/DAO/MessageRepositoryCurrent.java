@@ -69,12 +69,17 @@ public class MessageRepositoryCurrent implements MessageRepository{
     }
 
     @Override
-    public Message editMessage(String message_id, String newMessage) {
-        return dao.editMessage(message_id, newMessage);
+    public Message editMessage(String message_id, String newTopic, String newMessage) {
+        return dao.editMessage(message_id, newTopic, newMessage);
     }
 
     @Override
     public int size() {
         return dao.size();
+    }
+
+    @Override
+    public void print() {
+        dao.print();
     }
 }

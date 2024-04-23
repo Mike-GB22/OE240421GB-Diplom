@@ -42,6 +42,10 @@ public class DataServices {
         System.out.println(size());
     }
 
+    public void printUserRepository(){
+        instance.userService.getRepository().print();
+    }
+
     public void fillTestingDataInDAO(){
         Thread testDAOthread = new Thread(new testDAO(instance));
         testDAOthread.start();

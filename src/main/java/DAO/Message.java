@@ -36,7 +36,8 @@ public class Message {
         this.privateFlag = true;
     }
 
-    public Message editMessage(String newMessage){
+    public Message editMessage(String newTopic, String newMessage){
+        topic = newTopic;
         message = newMessage;
         this.editFlag = true;
         this.edit = new Date();

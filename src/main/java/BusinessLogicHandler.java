@@ -3,6 +3,7 @@ import DAO.UserSession;
 import services.DataServices;
 
 import java.io.IOException;
+import java.util.List;
 
 public class BusinessLogicHandler {
     private final ClientManager clientManager;
@@ -62,10 +63,17 @@ public class BusinessLogicHandler {
                 handlerMsgPrivate(arguments);
                 break;
             case "@edit":
-                //handlerMsgEdit(arguments);
+                handlerMsgEdit(arguments);
                 break;
             case "@del":
-                //handlerMsgDel(arguments);
+                handlerMsgDel(arguments);
+                break;
+
+            case "@get":
+                handlerGetMsg(arguments);
+                break;
+            case "@getarray":
+                handlerGetManyMsgs(arguments);
                 break;
 
             case "@getlast":
@@ -76,6 +84,19 @@ public class BusinessLogicHandler {
                 break;
 
 
+            case "@printusers":
+                dataServices.userService.print();
+                break;
+            case "@printsessions":
+                dataServices.userSessionService.print();
+                break;
+            case "@printmessages":
+                dataServices.messageService.print();
+                break;
+            case "@printsize":
+                dataServices.printSize();
+                break;
+
             case "@":
             default:
                 clientManager.messageToClient(
@@ -83,6 +104,67 @@ public class BusinessLogicHandler {
                 break;
         }
         //clientManager.broadcastMessageToAll("return : " + messagesFromClient);
+    }
+
+    //Редактирование сообщения
+    private void handlerMsgEdit(String argumentsString) throws IOException{
+        String[] arguments = splitArguments(argumentsString,2);
+        if(arguments.length < 2) {
+            clientManager.messageToClient(BusinessLogicAnswers.needArguments());
+            return;
+        }
+        String msgIDForEdit = arguments[0];
+        String[] topicAndMsg = splitTopicMsg(arguments[1]);
+        if(topicAndMsg.length < 2) {
+            clientManager.messageToClient(BusinessLogicAnswers.needArguments());
+            return;
+        } try {
+            Message msg = dataServices.messageService.editMessage(
+                    msgIDForEdit
+                    , topicAndMsg[0], topicAndMsg[1]);
+
+            //clientManager.messageToClient(msg.toJson());
+            clientManager.privateMessageToStream(clientManager.getUserID(),msg.toJson());
+        } catch (Exception e) {
+            clientManager.messageToClient(BusinessLogicAnswers.bad());
+        }
+    }
+
+
+    //Удаление сообщения по его ИД
+    private void handlerMsgDel(String messageID) throws IOException{
+        try {
+            Message msg = dataServices.messageService.deleteMessage(messageID);
+            if(msg == null) {
+                clientManager.messageToClient(BusinessLogicAnswers.badMessageID());
+            }
+        } catch (Exception e){
+            clientManager.messageToClient(BusinessLogicAnswers.badMessageNotDeleted());
+        }
+    }
+
+
+    //Получение одного сообщения по его Идетификатору
+    private void handlerGetMsg(String messageID) throws IOException{
+        Message msg = dataServices.messageService.getMessage(messageID);
+        try {
+            clientManager.messageToClient(msg.toJson());
+        } catch (Exception e){
+            clientManager.messageToClient(BusinessLogicAnswers.badMessageID());
+        }
+    }
+
+    //Получение многих сообщений по списку идентиикаторов
+    private void handlerGetManyMsgs(String argumentsString) throws IOException{
+        String[] messageIDs = splitArguments(argumentsString,1001);
+        List<Message> msgs = dataServices.messageService.getMessage(messageIDs);
+        for (Message msg : msgs) {
+            try {
+                clientManager.messageToClient(msg.toJson());
+            } catch (Exception e) {
+                clientManager.messageToClient(BusinessLogicAnswers.badMessageID());
+            }
+        }
     }
 
     ///Добавление ПРИВАТНОГО сообщения

@@ -95,4 +95,11 @@ public class UserDAOArrayList implements UserDAO{
     public int size() {
         return list.size();
     }
+
+    @Override
+    public  void print(){
+        for(User user : list){
+            System.out.println(user);
+        }
+    }
 }

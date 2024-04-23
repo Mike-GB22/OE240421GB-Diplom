@@ -99,4 +99,11 @@ public class UserSessionDAOArrayList implements UserSessionDAO {
         }
         return result.toString();
     }
+
+    @Override
+    public void print(){
+        for(UserSession session : list){
+            System.out.println(session);
+        }
+    }
 }

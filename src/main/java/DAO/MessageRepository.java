@@ -14,6 +14,7 @@ public interface MessageRepository {
     List<Message> deleteMessages(String[] messages_id);
     List<Message> deleteAllMessages();
     List<Message> deleteAllMessagesFromUser(int user_id);
-    Message editMessage(String message_id, String newMessage);
+    Message editMessage(String message_id, String newTopic, String newMessage);
     int size();
+    void print();
 }

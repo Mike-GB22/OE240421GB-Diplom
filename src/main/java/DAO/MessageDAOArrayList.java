@@ -8,6 +8,7 @@ public class MessageDAOArrayList implements MessageDAO{
     @Override
     public Message newMessage(int user_id, String topic, String message) {
         Message msg = new Message(user_id, topic, message);
+        list.add(msg);
         return msg;
     }
 
@@ -19,6 +20,7 @@ public class MessageDAOArrayList implements MessageDAO{
     @Override
     public Message newPrivateMessage(int user_id, String topic, String message, int for_user_id) {
         Message msg = new Message(user_id, topic, message, for_user_id);
+        list.add(msg);
         return msg;
 
     }
@@ -97,10 +99,10 @@ public class MessageDAOArrayList implements MessageDAO{
     }
 
     @Override
-    public Message editMessage(String message_id, String newMessage) {
+    public Message editMessage(String message_id, String newTopic, String newMessage) {
         Message msg = getMessage(message_id);
         if(msg != null) {
-            msg.editMessage(newMessage);
+            msg.editMessage(newTopic, newMessage);
             return msg;
         }
         return null;
@@ -109,5 +111,12 @@ public class MessageDAOArrayList implements MessageDAO{
     @Override
     public int size() {
         return list.size();
+    }
+
+    @Override
+    public  void print(){
+        for(Message msg : list){
+            System.out.println(msg);
+        }
     }
 }

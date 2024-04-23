@@ -14,5 +14,6 @@ public interface UserRepository {
     User setAdminFlag(int user_id, boolean admin_flag);
     User renameUser(int user_id, String newName);
     int size();
+    void print();
 }
 

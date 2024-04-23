@@ -45,4 +45,11 @@ public class BusinessLogicAnswers {
         return String.format("WARN. Пользователь %s зашел в чат. SID: %s", name, SID);
     }
 
+    public static String badMessageID() {
+        return "Сообщение не найденно";
+    }
+
+    public static String badMessageNotDeleted() {
+        return "Сообщение не удаленно";
+    }
 }
