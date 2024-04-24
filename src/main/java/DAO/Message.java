@@ -26,7 +26,7 @@ public class Message {
 
         message_id = "MESSAGE_"
                 + String.format("%020d", getMessagesCount())
-                + "_" + date.getTime();
+                + "_" + (int) date.getTime();
     }
 
     //Конструктор приватного сообщения

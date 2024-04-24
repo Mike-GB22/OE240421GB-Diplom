@@ -48,9 +48,7 @@ public class User {
         if (pass.equals(passToCheck)) return true;
         return false;
     }
-    public boolean isAdmin_flag() {
-        return admin_flag;
-    }
+
     @Override
     public String toString(){
         String result = String.format("USER id: %d, name: %s, pass: %s, admin flag: %b"
@@ -61,5 +59,9 @@ public class User {
     public String toJson(){
         Gson gson = new Gson();
         return gson.toJson(this);
+    }
+
+    public static int getMaxUserId(){
+        return max_user_id;
     }
 }
