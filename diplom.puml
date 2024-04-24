@@ -1,0 +1,421 @@
+@startuml
+class DAO.UserSession {
+- {static} long count
+- String session_id
+- int user_id
+- String passHash
+- String ip
+- Date begone
+- Date updated
++ UserSession updateSession()
++ String getSession_id()
++ int getUser_id()
++ String getPassHash()
++ String getIp()
++ Date getBegone()
++ Date getUpdated()
+- void sessionCountIncrement()
++ String toString()
++ String toJson()
+}
+class services.testDataServices {
++ {static} void main(String[])
+}
+class Server {
+- ServerSocket serverSocket
+- {static} DataServices dataServices
++ {static} DataServices getDataServices()
++ void closeServerSocket()
++ void startDelay(int)
+}
+interface DAO.MessageRepository {
+~ Message newMessage(int,String,String)
+~ void addMessage(Message)
+~ Message newPrivateMessage(int,String,String,int)
+~ Message getMessage(String)
+~ List<Message> getMessages(String[])
+~ List<Message> getAllMessages()
+~ List<Message> getAllMessagesFromUser(int)
+~ Message deleteMessage(String)
+~ List<Message> deleteMessages(String[])
+~ List<Message> deleteAllMessages()
+~ List<Message> deleteAllMessagesFromUser(int)
+~ Message editMessage(String,String,String)
+~ int size()
+~ void print()
+~ List<Message> getLast100Messages()
+~ List<Message> getLastMessagesForm(String)
+}
+class client.Client {
+- Socket socket
+- String name
+- BufferedWriter bufferedWriter
+- BufferedReader bufferedReader
+~ boolean isClientRun
++ void sendMessage(String)
++ void listenForMessagesFromServer()
++ void listenForMessagesFromClient()
++ void closeEverything(String)
++ void closeEverything()
+}
+class client.GentratorMessages {
++ {static} void main(String[])
+}
+class DAO.UserSessionRepositoryCurrent {
+~ UserSessionDAO dao
++ UserSession newSession(int,String,String)
++ void addSession(UserSession)
++ UserSession getSession(String)
++ boolean isSessionValidWithIP(String,String)
++ boolean isSession(String)
++ UserSession deleteSession(String)
++ List<UserSession> deleteAll()
++ List<UserSession> deleteTimeOut(int)
++ int size()
++ String toString()
++ void print()
+}
+class BusinessLogicAnswers {
++ {static} String badFirstSymbol()
++ {static} String needArguments()
++ {static} String commandNotFound()
++ {static} String badLogin()
++ {static} String badSession()
++ {static} String okSessionEndet()
++ {static} String okExit()
++ {static} String ok()
++ {static} String bad()
++ {static} String warnUserExited(String,String)
++ {static} String warnUserEntered(String,String)
++ {static} String badMessageID()
++ {static} String badMessageNotDeleted()
+}
+class BusinessLogicHandler {
+- ClientManager clientManager
+- DataServices dataServices
++ void messagesFromClientHandler(String)
+- void handlerMsgEdit(String)
+- void handlerMsgDel(String)
+- void handlerGetMsg(String)
+- void handlerGetManyMsgs(String)
+- void handlerGetLast100Msgs()
+- void handlerGetLastMsgsFrom(String)
+- void handlerMsgPrivate(String)
+- void handlerMsg(String)
+- void handlerStreamOn()
+- void handlerStreamOff()
+- void handlerEndSession()
+- void handlerExit()
+- void handlerLogin(String)
+- void handlerLoginBySession(String)
+- String[] splitArguments(String,int)
+- String[] splitTopicMsg(String)
+}
+class ProgrammServer {
++ {static} void main(String[])
+}
+class services.UserSessionService {
+- {static} int TIME_OUT_FOR_SESSION_SECONDS
+- {static} UserSessionService instance
+- UserSessionRepository repository
+- DataServices dataServices()
++ {static} UserSessionService getInstance()
++ UserSessionRepository getRepository()
++ String authentication(int,String,String)
+- String newSession(int,String,String)
++ String checkSID(String)
+- void deleteTimeOutSession()
++ String toString()
++ UserSession endSession(String)
++ void print()
+}
+interface DAO.MessageDAO {
+~ Message newMessage(int,String,String)
+~ void addMessage(Message)
+~ Message newPrivateMessage(int,String,String,int)
+~ Message getMessage(String)
+~ List<Message> getMessages(String[])
+~ List<Message> getAllMessages()
+~ List<Message> getAllMessagesFromUser(int)
+~ Message deleteMessage(String)
+~ List<Message> deleteMessages(String[])
+~ List<Message> deleteAllMessages()
+~ List<Message> deleteAllMessagesFromUser(int)
+~ Message editMessage(String,String,String)
+~ int size()
+~ void print()
+~ List<Message> getLast100Messages()
+~ List<Message> getLastMessagesForm(String)
+}
+class services.UserService {
+- {static} UserService instance
+- UserRepository repository
+- DataServices dataServices()
++ {static} UserService getInstance()
++ UserRepository getRepository()
++ int size()
++ boolean isLoginPassOk(int,String)
++ void print()
+}
+class DAO.MessageRepositoryCurrent {
+~ MessageDAO dao
++ Message newMessage(int,String,String)
++ void addMessage(Message)
++ Message newPrivateMessage(int,String,String,int)
++ Message getMessage(String)
++ List<Message> getMessages(String[])
++ List<Message> getAllMessages()
++ List<Message> getAllMessagesFromUser(int)
++ Message deleteMessage(String)
++ List<Message> deleteMessages(String[])
++ List<Message> deleteAllMessages()
++ List<Message> deleteAllMessagesFromUser(int)
++ Message editMessage(String,String,String)
++ int size()
++ void print()
++ List<Message> getLast100Messages()
++ List<Message> getLastMessagesForm(String)
+}
+interface DAO.UserDAO {
+~ User newUser(String,String)
+~ void addUser(User)
+~ User getUser(int)
+~ boolean isUser(int)
+~ boolean isUserAdmin(int)
+~ User deleteUser(int)
+~ List<User> getAllUsers()
+~ List<User> getAllAdminUsers()
+~ User setAdminFlag(int,boolean)
+~ User renameUser(int,String)
+~ int size()
+~ void print()
+}
+class DAO.UserSessionDAOArrayList {
+~ List<UserSession> list
++ UserSession newSession(int,String,String)
++ void addSession(UserSession)
++ boolean isSession(String)
++ boolean isSessionValidWithIP(String,String)
++ UserSession deleteSession(String)
++ List<UserSession> deleteAll()
++ List<UserSession> deleteTimeOut(int)
++ int size()
++ UserSession getSession(String)
++ String toString()
++ void print()
+}
+class DAO.MessageDAOArrayList {
+~ List<Message> list
++ Message newMessage(int,String,String)
++ void addMessage(Message)
++ Message newPrivateMessage(int,String,String,int)
++ Message getMessage(String)
++ List<Message> getMessages(String[])
++ List<Message> getAllMessages()
++ List<Message> getAllMessagesFromUser(int)
++ Message deleteMessage(String)
++ List<Message> deleteMessages(String[])
++ List<Message> deleteAllMessages()
++ List<Message> deleteAllMessagesFromUser(int)
++ Message editMessage(String,String,String)
++ int size()
++ void print()
++ List<Message> getLast100Messages()
++ List<Message> getLastMessagesForm(String)
+}
+interface DAO.UserSessionDAO {
+~ UserSession newSession(int,String,String)
+~ void addSession(UserSession)
+~ UserSession getSession(String)
+~ boolean isSessionValidWithIP(String,String)
+~ boolean isSession(String)
+~ UserSession deleteSession(String)
+~ List<UserSession> deleteAll()
+~ List<UserSession> deleteTimeOut(int)
+~ int size()
+~ String toString()
+~ void print()
+}
+class DAO.testDAO {
+- DataServices dataServices
++ {static} void main(String[])
++ void run()
+}
+class DAO.UserRepositoryCurrent {
+~ UserDAO dao
++ User newUser(String,String)
++ void addUser(User)
++ User getUser(int)
++ boolean isUser(int)
++ boolean isUserAdmin(int)
++ User deleteUser(int)
++ List<User> getAllUsers()
++ List<User> getAllAdminUsers()
++ User setAdminFlag(int,boolean)
++ User renameUser(int,String)
++ int size()
++ void print()
+}
+interface DAO.UserRepository {
+~ User newUser(String,String)
+~ void addUser(User)
+~ User getUser(int)
+~ boolean isUser(int)
+~ boolean isUserAdmin(int)
+~ User deleteUser(int)
+~ List<User> getAllUsers()
+~ List<User> getAllAdminUsers()
+~ User setAdminFlag(int,boolean)
+~ User renameUser(int,String)
+~ int size()
+~ void print()
+}
+class DAO.Message {
+- {static} long count
+- String message_id
+- int user_id
+- Date date
+- Date edit
+- boolean editFlag
+- boolean privateFlag
+- int for_user_id
+- String topic
+- String message
++ Message editMessage(String,String)
+- long getMessagesCount()
++ {static} long getCount()
++ String getMessage_id()
++ int getUser_id()
++ Date getDate()
++ Date getEdit()
++ boolean isEditFlag()
++ boolean isPrivateFlag()
++ int getFor_user_id()
++ String getTopic()
++ String getMessage()
++ String toString()
++ String toJson()
+}
+class services.DataServices {
+- {static} DataServices instance
++ UserService userService
++ UserSessionService userSessionService
++ MessageService messageService
++ {static} DataServices getInstance()
++ {static} void loadTestDAO()
++ String size()
++ void printSize()
++ void printUserRepository()
++ void fillTestingDataInDAO()
+}
+class DAO.User {
+- {static} int max_user_id
+- int user_id
+- String name
+- String pass
+- boolean admin_flag
++ String getName()
++ boolean isAdmin()
++ User setName(String)
++ User setAdminFlag(boolean)
++ int getUser_id()
++ String getPass()
++ boolean checkPass(String)
++ boolean isAdmin_flag()
++ String toString()
++ String toJson()
+}
+class services.MessageService {
+- {static} MessageService instance
+- MessageRepository repository
+- DataServices dataServices()
++ {static} MessageService getInstance()
++ MessageRepository getRepository()
++ Message newMessage(int,String,String)
++ Message newPrivateMessage(int,String,String,int)
++ Message getMessages(String)
++ List<Message> getMessages(String[])
++ List<Message> getAllMessages()
++ List<Message> getLast100Messages()
++ List<Message> getLastMessagesForm(String)
++ Message deleteMessage(String)
++ Message editMessage(String,String,String)
++ void print()
+}
+class ClientManager {
+- {static} List<ClientManager> clients
+- {static} List<ClientManager> streamClients
+- Socket socket
++ String clientIPAddress
+- {static} DataServices dataServices
+- BusinessLogicHandler businessLogicHandler
+- BufferedReader bufferedReader
+- BufferedWriter bufferedWriter
+- String nameOrSID
+- UserSession userSession
+- int clientID
+- {static} int count_ClientID
++ void setClientID()
++ void setSID(String)
++ UserSession getUserSession()
++ int getUserID()
++ String getUserName()
++ void run()
+- void listenMessagesFromClient()
+~ void broadcastMessageToAll(String)
+~ void broadcastMessageToStream(String)
+~ void privateMessageToStream(int,String)
+~ void broadcastMessage(List<ClientManager>,String)
+~ void privateMessage(ClientManager,List<ClientManager>,String)
+~ void messageToClient(String)
+- void exit()
+- void deleteAllCloseClientManagers()
+- void closeEverything()
++ void printServerLog(String)
++ String getSID()
++ {static} ClientManager getClientManagerByUserID(int)
++ Socket getSocket()
++ {static} List<ClientManager> getStreamClients()
+}
+class DAO.UserDAOArrayList {
+~ List<User> list
++ User newUser(String,String)
++ void addUser(User)
++ User getUser(int)
++ boolean isUser(int)
++ boolean isUserAdmin(int)
++ User deleteUser(int)
++ List<User> getAllUsers()
++ List<User> getAllAdminUsers()
++ User setAdminFlag(int,boolean)
++ User renameUser(int,String)
++ int size()
++ void print()
+}
+interface DAO.UserSessionRepository {
+~ UserSession newSession(int,String,String)
+~ void addSession(UserSession)
+~ UserSession getSession(String)
+~ boolean isSessionValidWithIP(String,String)
+~ boolean isSession(String)
+~ UserSession deleteSession(String)
+~ List<UserSession> deleteAll()
+~ List<UserSession> deleteTimeOut(int)
+~ int size()
+~ String toString()
+~ void print()
+}
+class client.ProgrammClient {
++ {static} void main(String[])
+}
+
+
+DAO.UserSessionRepository <|.. DAO.UserSessionRepositoryCurrent
+DAO.MessageRepository <|.. DAO.MessageRepositoryCurrent
+DAO.UserSessionDAO <|.. DAO.UserSessionDAOArrayList
+DAO.MessageDAO <|.. DAO.MessageDAOArrayList
+DAO.Runnable <|.. DAO.testDAO
+DAO.UserRepository <|.. DAO.UserRepositoryCurrent
+Runnable <|.. ClientManager
+DAO.UserDAO <|.. DAO.UserDAOArrayList
+@enduml
