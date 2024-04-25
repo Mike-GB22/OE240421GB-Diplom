@@ -142,6 +142,7 @@ public class ClientManager implements Runnable{
 
     private void exit() throws IOException {
         clients.remove(this);
+        streamClients.remove(this);
         String prompt = "User: " + nameOrSID + " is disconnected.";
         printServerLog(prompt);
         broadcastMessageToStream(prompt);
@@ -158,6 +159,7 @@ public class ClientManager implements Runnable{
         }
         for(ClientManager client: listToDelete){
             clients.remove(client);
+            streamClients.remove(client);
         }
     }
 
