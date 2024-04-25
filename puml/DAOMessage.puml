@@ -1,0 +1,42 @@
+@startuml
+class DAO.MessageDAOArrayList {
+~ List<Message> list
++ Message newMessage(int,String,String)
++ void addMessage(Message)
++ Message newPrivateMessage(int,String,String,int)
++ Message getMessage(String)
++ List<Message> getMessages(String[])
++ List<Message> getAllMessages()
++ List<Message> getAllMessagesFromUser(int)
++ Message deleteMessage(String)
++ List<Message> deleteMessages(String[])
++ List<Message> deleteAllMessages()
++ List<Message> deleteAllMessagesFromUser(int)
++ Message editMessage(String,String,String)
++ int size()
++ void print()
++ List<Message> getLast100Messages()
++ List<Message> getLastMessagesForm(String)
+}
+interface DAO.MessageDAO {
+~ Message newMessage(int,String,String)
+~ void addMessage(Message)
+~ Message newPrivateMessage(int,String,String,int)
+~ Message getMessage(String)
+~ List<Message> getMessages(String[])
+~ List<Message> getAllMessages()
+~ List<Message> getAllMessagesFromUser(int)
+~ Message deleteMessage(String)
+~ List<Message> deleteMessages(String[])
+~ List<Message> deleteAllMessages()
+~ List<Message> deleteAllMessagesFromUser(int)
+~ Message editMessage(String,String,String)
+~ int size()
+~ void print()
+~ List<Message> getLast100Messages()
+~ List<Message> getLastMessagesForm(String)
+}
+
+
+DAO.MessageDAO <|.. DAO.MessageDAOArrayList
+@enduml

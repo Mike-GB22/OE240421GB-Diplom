@@ -1,0 +1,74 @@
+@startuml
+class DAO.UserRepositoryCurrent {
+~ UserDAO dao
++ User newUser(String,String)
++ void addUser(User)
++ User getUser(int)
++ boolean isUser(int)
++ boolean isUserAdmin(int)
++ User deleteUser(int)
++ List<User> getAllUsers()
++ List<User> getAllAdminUsers()
++ User setAdminFlag(int,boolean)
++ User renameUser(int,String)
++ int size()
++ void print()
+}
+class services.UserService {
+- {static} UserService instance
+- UserRepository repository
+- DataServices dataServices()
++ {static} UserService getInstance()
++ UserRepository getRepository()
++ int size()
++ boolean isLoginPassOk(int,String)
++ void print()
+}
+interface DAO.UserDAO {
+~ User newUser(String,String)
+~ void addUser(User)
+~ User getUser(int)
+~ boolean isUser(int)
+~ boolean isUserAdmin(int)
+~ User deleteUser(int)
+~ List<User> getAllUsers()
+~ List<User> getAllAdminUsers()
+~ User setAdminFlag(int,boolean)
+~ User renameUser(int,String)
+~ int size()
+~ void print()
+}
+interface DAO.UserRepository {
+~ User newUser(String,String)
+~ void addUser(User)
+~ User getUser(int)
+~ boolean isUser(int)
+~ boolean isUserAdmin(int)
+~ User deleteUser(int)
+~ List<User> getAllUsers()
+~ List<User> getAllAdminUsers()
+~ User setAdminFlag(int,boolean)
+~ User renameUser(int,String)
+~ int size()
+~ void print()
+}
+class DAO.UserDAOArrayList {
+~ List<User> list
++ User newUser(String,String)
++ void addUser(User)
++ User getUser(int)
++ boolean isUser(int)
++ boolean isUserAdmin(int)
++ User deleteUser(int)
++ List<User> getAllUsers()
++ List<User> getAllAdminUsers()
++ User setAdminFlag(int,boolean)
++ User renameUser(int,String)
++ int size()
++ void print()
+}
+
+
+DAO.UserRepository <|.. DAO.UserRepositoryCurrent
+DAO.UserDAO <|.. DAO.UserDAOArrayList
+@enduml

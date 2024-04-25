@@ -1,0 +1,97 @@
+@startuml
+class DAO.MessageDAOArrayList {
+~ List<Message> list
++ Message newMessage(int,String,String)
++ void addMessage(Message)
++ Message newPrivateMessage(int,String,String,int)
++ Message getMessage(String)
++ List<Message> getMessages(String[])
++ List<Message> getAllMessages()
++ List<Message> getAllMessagesFromUser(int)
++ Message deleteMessage(String)
++ List<Message> deleteMessages(String[])
++ List<Message> deleteAllMessages()
++ List<Message> deleteAllMessagesFromUser(int)
++ Message editMessage(String,String,String)
++ int size()
++ void print()
++ List<Message> getLast100Messages()
++ List<Message> getLastMessagesForm(String)
+}
+interface DAO.MessageRepository {
+~ Message newMessage(int,String,String)
+~ void addMessage(Message)
+~ Message newPrivateMessage(int,String,String,int)
+~ Message getMessage(String)
+~ List<Message> getMessages(String[])
+~ List<Message> getAllMessages()
+~ List<Message> getAllMessagesFromUser(int)
+~ Message deleteMessage(String)
+~ List<Message> deleteMessages(String[])
+~ List<Message> deleteAllMessages()
+~ List<Message> deleteAllMessagesFromUser(int)
+~ Message editMessage(String,String,String)
+~ int size()
+~ void print()
+~ List<Message> getLast100Messages()
+~ List<Message> getLastMessagesForm(String)
+}
+interface DAO.MessageDAO {
+~ Message newMessage(int,String,String)
+~ void addMessage(Message)
+~ Message newPrivateMessage(int,String,String,int)
+~ Message getMessage(String)
+~ List<Message> getMessages(String[])
+~ List<Message> getAllMessages()
+~ List<Message> getAllMessagesFromUser(int)
+~ Message deleteMessage(String)
+~ List<Message> deleteMessages(String[])
+~ List<Message> deleteAllMessages()
+~ List<Message> deleteAllMessagesFromUser(int)
+~ Message editMessage(String,String,String)
+~ int size()
+~ void print()
+~ List<Message> getLast100Messages()
+~ List<Message> getLastMessagesForm(String)
+}
+class services.MessageService {
+- {static} MessageService instance
+- MessageRepository repository
+- DataServices dataServices()
++ {static} MessageService getInstance()
++ MessageRepository getRepository()
++ Message newMessage(int,String,String)
++ Message newPrivateMessage(int,String,String,int)
++ Message getMessages(String)
++ List<Message> getMessages(String[])
++ List<Message> getAllMessages()
++ List<Message> getLast100Messages()
++ List<Message> getLastMessagesForm(String)
++ Message deleteMessage(String)
++ Message editMessage(String,String,String)
++ void print()
+}
+class DAO.MessageRepositoryCurrent {
+~ MessageDAO dao
++ Message newMessage(int,String,String)
++ void addMessage(Message)
++ Message newPrivateMessage(int,String,String,int)
++ Message getMessage(String)
++ List<Message> getMessages(String[])
++ List<Message> getAllMessages()
++ List<Message> getAllMessagesFromUser(int)
++ Message deleteMessage(String)
++ List<Message> deleteMessages(String[])
++ List<Message> deleteAllMessages()
++ List<Message> deleteAllMessagesFromUser(int)
++ Message editMessage(String,String,String)
++ int size()
++ void print()
++ List<Message> getLast100Messages()
++ List<Message> getLastMessagesForm(String)
+}
+
+
+DAO.MessageDAO <|.. DAO.MessageDAOArrayList
+DAO.MessageRepository <|.. DAO.MessageRepositoryCurrent
+@enduml

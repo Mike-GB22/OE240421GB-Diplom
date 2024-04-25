@@ -1,0 +1,64 @@
+@startuml
+class DAO.UserSession {
+- {static} long count
+- String session_id
+- int user_id
+- String passHash
+- String ip
+- Date begone
+- Date updated
++ UserSession updateSession()
++ String getSession_id()
++ int getUser_id()
++ String getPassHash()
++ String getIp()
++ Date getBegone()
++ Date getUpdated()
+- void sessionCountIncrement()
++ String toString()
++ String toJson()
+}
+class DAO.User {
+- {static} int max_user_id
+- int user_id
+- String name
+- String pass
+- boolean admin_flag
++ String getName()
++ boolean isAdmin()
++ User setName(String)
++ User setAdminFlag(boolean)
++ int getUser_id()
++ String getPass()
++ boolean checkPass(String)
++ String toString()
++ String toJson()
++ {static} int getMaxUserId()
+}
+class DAO.Message {
+- {static} long count
+- String message_id
+- int user_id
+- Date date
+- Date edit
+- boolean editFlag
+- boolean privateFlag
+- int for_user_id
+- String topic
+- String message
++ Message editMessage(String,String)
+- long getMessagesCount()
++ {static} long getCount()
++ String getMessage_id()
++ int getUser_id()
++ Date getDate()
++ Date getEdit()
++ boolean isEditFlag()
++ boolean isPrivateFlag()
++ int getFor_user_id()
++ String getTopic()
++ String getMessage()
++ String toString()
++ String toJson()
+}
+@enduml

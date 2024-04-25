@@ -1,0 +1,23 @@
+@startuml
+class BusinessLogicHandler {
+- ClientManager clientManager
+- DataServices dataServices
++ void messagesFromClientHandler(String)
+- void handlerMsgEdit(String)
+- void handlerMsgDel(String)
+- void handlerGetMsg(String)
+- void handlerGetManyMsgs(String)
+- void handlerGetLast100Msgs()
+- void handlerGetLastMsgsFrom(String)
+- void handlerMsgPrivate(String)
+- void handlerMsg(String)
+- void handlerStreamOn()
+- void handlerStreamOff()
+- void handlerEndSession()
+- void handlerExit()
+- void handlerLogin(String)
+- void handlerLoginBySession(String)
+- String[] splitArguments(String,int)
+- String[] splitTopicMsg(String)
+}
+@enduml

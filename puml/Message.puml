@@ -1,0 +1,28 @@
+@startuml
+class DAO.Message {
+- {static} long count
+- String message_id
+- int user_id
+- Date date
+- Date edit
+- boolean editFlag
+- boolean privateFlag
+- int for_user_id
+- String topic
+- String message
++ Message editMessage(String,String)
+- long getMessagesCount()
++ {static} long getCount()
++ String getMessage_id()
++ int getUser_id()
++ Date getDate()
++ Date getEdit()
++ boolean isEditFlag()
++ boolean isPrivateFlag()
++ int getFor_user_id()
++ String getTopic()
++ String getMessage()
++ String toString()
++ String toJson()
+}
+@enduml

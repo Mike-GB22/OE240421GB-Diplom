@@ -1,0 +1,75 @@
+@startuml
+interface DAO.UserSessionDAO {
+~ UserSession newSession(int,String,String)
+~ void addSession(UserSession)
+~ UserSession getSession(String)
+~ boolean isSessionValidWithIP(String,String)
+~ boolean isSession(String)
+~ UserSession deleteSession(String)
+~ List<UserSession> deleteAll()
+~ List<UserSession> deleteTimeOut(int)
+~ int size()
+~ String toString()
+~ void print()
+}
+class services.UserSessionService {
+- {static} int TIME_OUT_FOR_SESSION_SECONDS
+- {static} UserSessionService instance
+- UserSessionRepository repository
+- DataServices dataServices()
++ {static} UserSessionService getInstance()
++ UserSessionRepository getRepository()
++ String authentication(int,String,String)
+- String newSession(int,String,String)
++ String checkSID(String)
+- void deleteTimeOutSession()
++ String toString()
++ UserSession endSession(String)
++ void print()
+}
+class DAO.UserSessionRepositoryCurrent {
+~ UserSessionDAO dao
++ UserSession newSession(int,String,String)
++ void addSession(UserSession)
++ UserSession getSession(String)
++ boolean isSessionValidWithIP(String,String)
++ boolean isSession(String)
++ UserSession deleteSession(String)
++ List<UserSession> deleteAll()
++ List<UserSession> deleteTimeOut(int)
++ int size()
++ String toString()
++ void print()
+}
+class DAO.UserSessionDAOArrayList {
+~ List<UserSession> list
++ UserSession newSession(int,String,String)
++ void addSession(UserSession)
++ boolean isSession(String)
++ boolean isSessionValidWithIP(String,String)
++ UserSession deleteSession(String)
++ List<UserSession> deleteAll()
++ List<UserSession> deleteTimeOut(int)
++ int size()
++ UserSession getSession(String)
++ String toString()
++ void print()
+}
+interface DAO.UserSessionRepository {
+~ UserSession newSession(int,String,String)
+~ void addSession(UserSession)
+~ UserSession getSession(String)
+~ boolean isSessionValidWithIP(String,String)
+~ boolean isSession(String)
+~ UserSession deleteSession(String)
+~ List<UserSession> deleteAll()
+~ List<UserSession> deleteTimeOut(int)
+~ int size()
+~ String toString()
+~ void print()
+}
+
+
+DAO.UserSessionRepository <|.. DAO.UserSessionRepositoryCurrent
+DAO.UserSessionDAO <|.. DAO.UserSessionDAOArrayList
+@enduml
