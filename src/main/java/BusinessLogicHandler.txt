@@ -30,6 +30,9 @@ getarray   (messageId:messageId:...:messageId) - получить несколько сообщение по
 getLast100 - получить последние 100 сообщений
 getLastForm (messageId) - получить послдение сообщения с index
 
+adduser     (user_id, new, pass) - добавление нового пользователя
+renameuser  (user_id, newName) - переименование пользователя
+newpass     (user_id, newPass) - новый пароль пользователю
 
  * Служебные комманды, вывода в консоль сервера
 printusers

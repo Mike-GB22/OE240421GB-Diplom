@@ -1,0 +1,107 @@
+@startuml
+class DAO.UserRepositoryCurrent {
+~ UserDAO dao
++ User newUser(String,String)
++ void addUser(User)
++ User getUser(int)
++ boolean isUser(int)
++ boolean isUserAdmin(int)
++ User deleteUser(int)
++ List<User> getAllUsers()
++ List<User> getAllAdminUsers()
++ User setAdminFlag(int,boolean)
++ User renameUser(int,String)
++ User newPass(int,String)
++ int size()
++ void print()
+}
+class services.UserService {
+- {static} UserService instance
+- UserRepository repository
+- DataServices dataServices()
++ {static} UserService getInstance()
++ UserRepository getRepository()
++ int size()
++ boolean isLoginPassOk(int,String)
++ User newUser(String,String,int)
++ User renameUser(int,String,int)
++ User newPass(int,String,int)
++ void print()
+}
+interface DAO.UserDAO {
+~ User newUser(String,String)
+~ void addUser(User)
+~ User getUser(int)
+~ boolean isUser(int)
+~ boolean isUserAdmin(int)
+~ User deleteUser(int)
+~ List<User> getAllUsers()
+~ List<User> getAllAdminUsers()
+~ User setAdminFlag(int,boolean)
+~ User renameUser(int,String)
+~ User newPass(int,String)
+~ int size()
+~ void print()
+}
+interface DAO.UserRepository {
+~ User newUser(String,String)
+~ void addUser(User)
+~ User getUser(int)
+~ boolean isUser(int)
+~ boolean isUserAdmin(int)
+~ User deleteUser(int)
+~ List<User> getAllUsers()
+~ List<User> getAllAdminUsers()
+~ User setAdminFlag(int,boolean)
+~ User renameUser(int,String)
+~ User newPass(int,String)
+~ int size()
+~ void print()
+}
+class DAO.UserDAOArrayList {
+~ List<User> list
++ User newUser(String,String)
++ void addUser(User)
++ User getUser(int)
++ boolean isUser(int)
++ boolean isUserAdmin(int)
++ User deleteUser(int)
++ List<User> getAllUsers()
++ List<User> getAllAdminUsers()
++ User setAdminFlag(int,boolean)
++ User renameUser(int,String)
++ User newPass(int,String)
++ int size()
++ void print()
+}
+class DAO.UserDAODB {
+- {static} String URL
+- {static} String USER
+- {static} String PASSWORD
+- {static} String SCHEMA
+- {static} String TABLE
+- {static} String SCHEMA_TABLE
++ void initialisationDBForUserDAODB()
++ int getMaxUserID()
++ List<Integer> getUsersID()
++ void makeSQLRequest(String)
++ User newUser(String,String)
++ void addUser(User)
++ User getUser(int)
++ boolean isUser(int)
++ boolean isUserAdmin(int)
++ User deleteUser(int)
++ List<User> getAllUsers()
++ List<User> getAllAdminUsers()
++ User setAdminFlag(int,boolean)
++ User renameUser(int,String)
++ User newPass(int,String)
++ int size()
++ void print()
+}
+
+
+DAO.UserRepository <|.. DAO.UserRepositoryCurrent
+DAO.UserDAO <|.. DAO.UserDAOArrayList
+DAO.UserDAO <|.. DAO.UserDAODB
+@enduml

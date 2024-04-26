@@ -50,9 +50,10 @@ public class ClientManager implements Runnable{
     public int getUserID() {
         try {
             return userSession.getUser_id();
-        } finally {
-            return 0;
+        } catch (Exception e){
+
         }
+            return 0;
     }
 
     public String getUserName() {

@@ -1,0 +1,20 @@
+@startuml
+class DAO.User {
+- {static} int max_user_id
+- int user_id
+- String name
+- String pass
+- boolean admin_flag
++ String getName()
++ boolean isAdmin()
++ User setName(String)
++ User setPass(String)
++ User setAdminFlag(boolean)
++ int getUser_id()
++ String getPass()
++ boolean checkPass(String)
++ String toString()
++ String toJson()
++ {static} int getMaxUserId()
+}
+@enduml

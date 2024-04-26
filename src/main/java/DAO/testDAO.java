@@ -2,6 +2,8 @@ package DAO;
 
 import services.DataServices;
 
+import java.util.Random;
+
 public class testDAO implements Runnable {
     //Для доступа к сервисам работы с данными
     private DataServices dataServices;
@@ -58,8 +60,8 @@ public class testDAO implements Runnable {
             dataServices.userSessionService.getRepository().addSession(ss1);
             dataServices.userSessionService.getRepository().addSession(ss2);
 
-            dataServices.userService.getRepository().addUser(user1);
-            dataServices.userService.getRepository().addUser(user2);
+            dataServices.userService.getRepository().newUser("User1", "pass" + new Random().nextInt());
+            dataServices.userService.getRepository().newUser("User2", "pass" + new Random().nextInt());
 
             dataServices.messageService.getRepository().addMessage(msg);
             dataServices.messageService.getRepository().addMessage(msg2);

@@ -1,7 +1,9 @@
 package services;
 
+import DAO.User;
 import DAO.UserRepository;
 import DAO.UserRepositoryCurrent;
+
 
 public class UserService {
     private static UserService instance;
@@ -45,6 +47,26 @@ public class UserService {
         return false;
     }
 
+    public User newUser(String name, String pass, int userIdOfAdmin ){
+        if(repository.isUserAdmin(userIdOfAdmin)){
+            return repository.newUser(name, pass);
+        }
+        return null;
+    }
+    public User renameUser(int userID, String newName, int userIdOfAdmin ){
+        if(repository.isUserAdmin(userIdOfAdmin)
+                || userID == userIdOfAdmin){
+            return repository.renameUser(userID, newName);
+        }
+        return null;
+    }
+    public User newPass(int userID, String newPass, int userIdOfAdmin ){
+        if(repository.isUserAdmin(userIdOfAdmin)
+                || userID == userIdOfAdmin){
+            return repository.newPass(userID, newPass);
+        }
+        return null;
+    }
     public void print(){
         repository.print();
     }

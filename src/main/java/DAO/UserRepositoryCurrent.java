@@ -6,7 +6,10 @@ public class UserRepositoryCurrent implements UserRepository{
     UserDAO dao;
     //DAO по умолчанию ArrayList
     public UserRepositoryCurrent(){
+        //Хранилище в Коллекции
         dao = new UserDAOArrayList();
+        //Хранилище в Базе данных
+        //dao = new UserDAODB();
     }
 
     public UserRepositoryCurrent(UserDAO dao){
@@ -61,6 +64,11 @@ public class UserRepositoryCurrent implements UserRepository{
     @Override
     public User renameUser(int user_id, String newName) {
         return dao.renameUser(user_id, newName);
+    }
+
+    @Override
+    public User newPass(int user_id, String newPass) {
+        return dao.newPass(user_id, newPass);
     }
 
     @Override

@@ -92,6 +92,15 @@ public class UserDAOArrayList implements UserDAO{
     }
 
     @Override
+    public User newPass(int user_id, String newPass){
+        User user = getUser(user_id);
+        if(user != null){
+            user.setPass(newPass);
+            return user;}
+        return null;
+    }
+
+    @Override
     public int size() {
         return list.size();
     }

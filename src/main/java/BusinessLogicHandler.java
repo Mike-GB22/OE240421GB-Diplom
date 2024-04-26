@@ -1,4 +1,5 @@
 import DAO.Message;
+import DAO.User;
 import DAO.UserSession;
 import services.DataServices;
 
@@ -69,6 +70,7 @@ public class BusinessLogicHandler {
                 handlerMsgDel(arguments);
                 break;
 
+                
             case "@get":
                 handlerGetMsg(arguments);
                 break;
@@ -84,6 +86,17 @@ public class BusinessLogicHandler {
             case "@getbetween":
                 break;
 
+
+            case "@adduser":
+                handlerAddNewUser(arguments);
+                break;
+            case "@renameuser":
+                handlerRenameUser(arguments);
+                break;
+            case "@newpass":
+                handlerNewPass(arguments);
+                break;
+                
             case "@printusers":
                 dataServices.userService.print();
                 break;
@@ -104,6 +117,54 @@ public class BusinessLogicHandler {
                 break;
         }
         //clientManager.broadcastMessageToAll("return : " + messagesFromClient);
+    }
+
+    //Добавление нового пользователя
+    private void handlerAddNewUser(String argumentsString) throws IOException {
+        String[] arguments = splitArguments(argumentsString,3);
+        if(arguments.length < 2) {
+            clientManager.messageToClient(BusinessLogicAnswers.needArguments());
+            return;
+        }
+//        boolean isAdminFlag = false;
+//        if(arguments.length == 3){
+//            isAdminFlag = Boolean.parseBoolean(arguments[2]);
+//        }
+        User user = dataServices.userService.newUser(arguments[0], arguments[1], clientManager.getUserID());
+        if(user == null){
+            clientManager.messageToClient(BusinessLogicAnswers.bad());
+        } else {
+            clientManager.messageToClient(user.toJson());
+        }
+    }
+
+    //Изменение имени пользователя
+    private void handlerRenameUser(String argumentsString) throws IOException {
+        String[] arguments = splitArguments(argumentsString,2);
+        if(arguments.length < 2) {
+            clientManager.messageToClient(BusinessLogicAnswers.needArguments());
+            return;
+        }
+        User user = dataServices.userService.renameUser(Integer.parseInt(arguments[0]), arguments[1], clientManager.getUserID());
+        if(user == null){
+            clientManager.messageToClient(BusinessLogicAnswers.bad());
+        } else {
+            clientManager.messageToClient(user.toJson());
+        }
+    }
+
+    private void handlerNewPass(String argumentsString) throws IOException {
+        String[] arguments = splitArguments(argumentsString,2);
+        if(arguments.length < 2) {
+            clientManager.messageToClient(BusinessLogicAnswers.needArguments());
+            return;
+        }
+        User user = dataServices.userService.newPass(Integer.parseInt(arguments[0]), arguments[1], clientManager.getUserID());
+        if(user == null){
+            clientManager.messageToClient(BusinessLogicAnswers.bad());
+        } else {
+            clientManager.messageToClient(user.toJson());
+        }
     }
 
 

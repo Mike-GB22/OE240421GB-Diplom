@@ -13,6 +13,7 @@ public interface UserRepository {
     List<User> getAllAdminUsers();
     User setAdminFlag(int user_id, boolean admin_flag);
     User renameUser(int user_id, String newName);
+    User newPass(int user_id, String newPass);
     int size();
     void print();
 }

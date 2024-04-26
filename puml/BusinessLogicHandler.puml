@@ -3,6 +3,9 @@ class BusinessLogicHandler {
 - ClientManager clientManager
 - DataServices dataServices
 + void messagesFromClientHandler(String)
+- void handlerAddNewUser(String)
+- void handlerRenameUser(String)
+- void handlerNewPass(String)
 - void handlerMsgEdit(String)
 - void handlerMsgDel(String)
 - void handlerGetMsg(String)

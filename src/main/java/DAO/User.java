@@ -18,6 +18,17 @@ public class User {
         this.admin_flag = false;
     }
 
+    //Ручная сборка пользователя, например для создания его из базы данных
+    public User(int userId, String name, String pass,boolean isAdmin){
+        this.user_id = userId;
+        this.name = name;
+        this.pass = pass;
+        this.admin_flag = isAdmin;
+        if (user_id > max_user_id) {
+            max_user_id = user_id;
+        }
+    }
+
     public String getName(){
         return name;
     }
@@ -30,6 +41,12 @@ public class User {
         this.name = newName;
         return this;
     }
+
+    public User setPass(String newPass){
+        this.pass = newPass;
+        return this;
+    }
+
 
     public User setAdminFlag(boolean admin_flag){
         this.admin_flag = admin_flag;
