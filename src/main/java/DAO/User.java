@@ -17,6 +17,10 @@ public class User {
         this.pass = pass;
         this.admin_flag = false;
     }
+    public User(String name, String pass, boolean isAdminFlag){
+        this(name, pass);
+        this.admin_flag = isAdminFlag;
+    }
 
     //Ручная сборка пользователя, например для создания его из базы данных
     public User(int userId, String name, String pass,boolean isAdmin){

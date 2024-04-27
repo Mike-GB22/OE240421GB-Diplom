@@ -53,6 +53,12 @@ public class UserService {
         }
         return null;
     }
+    public User newUser(String name, String pass, boolean isAdminFlag, int userIdOfAdmin ){
+        if(repository.isUserAdmin(userIdOfAdmin)){
+            return repository.newUser(name, pass, isAdminFlag);
+        }
+        return null;
+    }
     public User renameUser(int userID, String newName, int userIdOfAdmin ){
         if(repository.isUserAdmin(userIdOfAdmin)
                 || userID == userIdOfAdmin){

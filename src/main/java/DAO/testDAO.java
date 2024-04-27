@@ -21,6 +21,7 @@ public class testDAO implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("—Œ«ƒ¿Õ»≈ –≈œŒ«»“Œ–»≈¬ » «¿Õ≈—≈Õ»≈ »Õ‘Œ–Ã¿÷»» ¬ Õ»’, ƒÀﬂ œ–Œ¬≈ƒ≈Õ»ﬂ “≈—“Œ¬Œ√Œ «¿œ”— ¿");
         System.out.println("----------------------------");
         System.out.println("MESSAGES:");
         System.out.println("----------------------------");
@@ -31,17 +32,6 @@ public class testDAO implements Runnable {
         System.out.println(msg2);
         System.out.println(msg.toJson());
         System.out.println(msg2.toJson());
-
-        System.out.println("----------------------------");
-        System.out.println("USERS:");
-        System.out.println("----------------------------");
-        User user1 = new User("Ivan", "Paroll1");
-        User user2 = new User("Petr", "Paroll2");
-
-        System.out.println(user1);
-        System.out.println(user2);
-        System.out.println(user1.toJson());
-        System.out.println(user2.toJson());
 
         System.out.println("----------------------------");
         System.out.println("SESSION:");
@@ -60,8 +50,17 @@ public class testDAO implements Runnable {
             dataServices.userSessionService.getRepository().addSession(ss1);
             dataServices.userSessionService.getRepository().addSession(ss2);
 
+            System.out.println("----------------------------");
+            System.out.println("USERS:");
+            System.out.println("----------------------------");
+            User user1 = dataServices.userService.getRepository().newUser("Ivan", "Paroll1", true);
+            User user2 = dataServices.userService.getRepository().newUser("Petr", "Paroll2", true);
             dataServices.userService.getRepository().newUser("User1", "pass" + new Random().nextInt());
             dataServices.userService.getRepository().newUser("User2", "pass" + new Random().nextInt());
+            System.out.println(user1);
+            System.out.println(user2);
+            System.out.println(user1.toJson());
+            System.out.println(user2.toJson());
 
             dataServices.messageService.getRepository().addMessage(msg);
             dataServices.messageService.getRepository().addMessage(msg2);

@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface UserRepository {
     User newUser(String name, String pass);
+    User newUser(String name, String pass, boolean isAdminFlag);
     void addUser(User user);
     User getUser(int user_id);
     boolean isUser(int user_id);

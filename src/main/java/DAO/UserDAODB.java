@@ -75,12 +75,15 @@ public class UserDAODB  implements UserDAO{
 
     @Override
     public User newUser(String name, String pass) {
+        return newUser(name, pass, false);
+    }
+    @Override
+    public User newUser(String name, String pass, boolean isAdminFlag) {
         int user_id = getMaxUserID() + 1;
-        User user = new User(user_id, name, pass, false);
+        User user = new User(user_id, name, pass, isAdminFlag);
         addUser(user);
         return user;
     }
-
     @Override
     public void addUser(User user) {
         String statement = "INSERT INTO " + SCHEMA_TABLE +

@@ -8,7 +8,12 @@ public class UserDAOArrayList implements UserDAO{
 
     @Override
     public User newUser(String name, String pass) {
-        User user = new User(name, pass);
+        return newUser(name, pass, false);
+    }
+
+    @Override
+    public User newUser(String name, String pass, boolean isAdminFlag) {
+        User user = new User(name, pass, isAdminFlag);
         list.add(user);
         return user;
     }

@@ -22,6 +22,11 @@ public class UserRepositoryCurrent implements UserRepository{
     }
 
     @Override
+    public User newUser(String name, String pass, boolean isAdminFlag) {
+        return dao.newUser(name, pass, isAdminFlag);
+    }
+
+    @Override
     public void addUser(User user) {
         dao.addUser(user);
     }

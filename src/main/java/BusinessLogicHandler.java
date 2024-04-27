@@ -126,11 +126,13 @@ public class BusinessLogicHandler {
             clientManager.messageToClient(BusinessLogicAnswers.needArguments());
             return;
         }
-//        boolean isAdminFlag = false;
-//        if(arguments.length == 3){
-//            isAdminFlag = Boolean.parseBoolean(arguments[2]);
-//        }
-        User user = dataServices.userService.newUser(arguments[0], arguments[1], clientManager.getUserID());
+        String name = arguments[0];
+        String pass = arguments[1];
+        boolean isAdminFlag = false;
+        if(arguments.length == 3){
+            isAdminFlag = Boolean.parseBoolean(arguments[2]);
+        }
+        User user = dataServices.userService.newUser(name, pass, isAdminFlag, clientManager.getUserID());
         if(user == null){
             clientManager.messageToClient(BusinessLogicAnswers.bad());
         } else {
@@ -145,7 +147,10 @@ public class BusinessLogicHandler {
             clientManager.messageToClient(BusinessLogicAnswers.needArguments());
             return;
         }
-        User user = dataServices.userService.renameUser(Integer.parseInt(arguments[0]), arguments[1], clientManager.getUserID());
+        int userIdForChangeName = Integer.parseInt(arguments[0]);
+        String newUserName = arguments[1];
+
+        User user = dataServices.userService.renameUser(userIdForChangeName, newUserName, clientManager.getUserID());
         if(user == null){
             clientManager.messageToClient(BusinessLogicAnswers.bad());
         } else {
